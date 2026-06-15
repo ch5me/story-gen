@@ -60,11 +60,19 @@ exports it, continuity checks catch drift.
 
 ## Current State
 
-Planning artifacts written into the (empty) repo:
-- `docs/plan/storygen-bootstrap-checklist.md` — full checkbox work breakdown.
-- `.sisyphus/goals/current-goal.md` — this doc.
-Repo is an empty git repo on `main` (no commits yet). Implementation not started;
-awaiting the activation prompt to launch the swarm.
+- **Wave A: DONE + committed** (`1df81c7`). Root scaffold (pnpm/turbo/devmux/hush,
+  node 24, pnpm 11 allowBuilds), `@ch5me/storygen-schema` authored and green
+  (tsc build + 5 vitest tests), all research/architecture/policy docs landed.
+  Workspace installs clean.
+- **Scaffolded** all 6 package + 3 app manifests/tsconfigs; full dependency graph
+  installed (react 19, vite 6, @xyflow/react, hono, wrangler, inkjs, tracery,
+  testing-library). Schema dist built so consumers resolve.
+- **Wave B: IN FLIGHT** — agent swarm (Workflow `wp8ayzget`) building compiler,
+  continuity, prompt-compiler, generation, player, research in parallel, each
+  self-verifying `typecheck` + `test` against the pinned schema API.
+- **Wave C: staged** (`/tmp/storygen-wave-c.mjs`) — api, studio, reader.
+- Pending after B/C: turbo typecheck+test+build green across the graph, dev/app
+  smoke, Ren'Py/Ink/continuity proofs, final commit + push.
 
 ## Plan
 

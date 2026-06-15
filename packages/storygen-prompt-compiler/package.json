@@ -1,0 +1,26 @@
+{
+  "name": "@ch5me/storygen-prompt-compiler",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Compiles character/location/stage canon into image prompts; Tracery seeded text.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ch5me/storygen-schema": "workspace:*",
+    "tracery-grammar": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@ch5me/storygen-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hono + Cloudflare Workers API for StoryGen (in-memory adapter first; D1/R2 bindings declared).",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/dev-server.ts",
+    "dev:worker": "wrangler dev --port 48787",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ch5me/storygen-compiler": "workspace:*",
+    "@ch5me/storygen-generation": "workspace:*",
+    "@ch5me/storygen-schema": "workspace:*",
+    "hono": "^4.7.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250507.0",
+    "@hono/node-server": "^1.13.8",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.20.0"
+  }
+}

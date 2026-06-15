@@ -1,0 +1,33 @@
+{
+  "name": "@ch5me/storygen-player",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable React web-reader primitives + headless runtime that plays a compiled WebManifest.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ch5me/storygen-schema": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "react": "^19",
+    "react-dom": "^19",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
