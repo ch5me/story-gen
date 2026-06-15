@@ -40,6 +40,13 @@ whole system. They're short and current.
 - **Run it**: `pnpm install && pnpm dev:all` (api :48787, studio :45180,
   reader :45181; storybook via `devmux ensure storybook` on :45200). Verify the
   whole thing green with `bash scripts/smoke-acceptance.sh`.
+  - **External collaborators:** `pnpm install` fetches the shared CH5 design
+    packages (`@ch5me/ch5-ui-web`, `@ch5me/firefly-design`, `@ch5me/ch5-design-web`)
+    from **GitHub Packages**, which are private — you need read access / a
+    `NODE_AUTH_TOKEN` for the `@ch5me` scope (ask the StoryGen owner). **Reading
+    and understanding the code + docs needs none of this** — only running the apps
+    locally does. The non-UI packages (`schema`, `compiler`, `continuity`,
+    `prompt-compiler`, `generation`, `player`) and the api have no such dependency.
 - **Seeded sample**: a small "Rooftop" project (two 18+ characters, one location,
   three scenes, a choice, a state change) loads by default so every surface has
   real data immediately.
