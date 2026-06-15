@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "typecheck"],
-      "outputs": ["dist/**", "build/**", "**/*.d.ts"],
+      "outputs": ["dist/**", "build/**", "storybook-static/**", "**/*.d.ts"],
       "inputs": ["src/**", "tsconfig.json", "vite.config.*", "index.html"],
       "passThroughEnv": ["PATH", "HOME", "SHELL", "NVM_BIN", "NVM_DIR"]
     },

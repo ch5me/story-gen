@@ -30,6 +30,13 @@
       "health": { "type": "port", "port": 45181 },
       "proxy": true,
       "dashboard": true
+    },
+    "storybook": {
+      "cwd": "apps/storybook",
+      "command": "pnpm storybook",
+      "health": { "type": "port", "port": 45200 },
+      "proxy": true,
+      "dashboard": true
     }
   }
 }
