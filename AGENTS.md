@@ -116,6 +116,38 @@ docs/
   bindings (real IDs come later). Validate every request/response with
   `@ch5me/storygen-schema`.
 
+## CH5 Design System (standard look & feel)
+
+The web apps use the **published** shared CH5 design system from GitHub Packages —
+do NOT re-implement or duplicate UI primitives:
+
+- `@ch5me/ch5-ui-web` — the component library (Radix + Tailwind v4 + `--ff-*`
+  tokens). Import components from the barrel: `import { Button, Card, Tabs, Select,
+  Input, Textarea, ScrollArea, Badge, Tooltip, cn } from '@ch5me/ch5-ui-web'`.
+- `@ch5me/firefly-design` + `@ch5me/ch5-design-web` — design tokens / theme CSS.
+
+These come from the `@ch5me` GitHub Packages registry (see `.npmrc`; auth via
+`~/.npmrc` / `NODE_AUTH_TOKEN`). Our own `@ch5me/storygen-*` packages resolve from
+the workspace and never hit the registry. We consume the **published** design
+packages rather than workspace path refs to `../ch5-packages` (per the
+"prefer published shared packages over ad-hoc local links" policy, and because
+those packages carry `workspace:*` dev deps that only resolve in their home repo).
+
+**Theme bootstrap** (each Vite app): `src/index.css` does, in order,
+`@import "tailwindcss"`, `@import "@ch5me/firefly-design/tailwind.css"`,
+`@source "<rel>/node_modules/@ch5me/ch5-ui-web/dist"` (load-bearing — Tailwind v4
+must scan the compiled component classes), `@custom-variant dark (...)`, and a
+`body { background: var(--ff-bg); color: var(--ff-text); ... }`. `main.tsx` sets
+`document.body.setAttribute('data-ch5-theme','dark')` before render. There is NO
+React ThemeProvider — theme is a DOM attribute.
+
+**Gotchas:** `@ch5me/motion@0.3.1` was published without its `dist/`, so the
+ch5-ui-web barrel (navigation-menu/sidebar → motion) crashes on import — pinned to
+`0.3.2` via `overrides` in `pnpm-workspace.yaml`. `tslib` is a root dependency
+(matches folio-db). Fix such breakage at the version/dep level — never shim around
+it in an app. For vitest configs, do NOT register `@vitejs/plugin-react` (it clashes
+with the vite version vitest nests); use `esbuild: { jsx: 'automatic' }` instead.
+
 ## Dev Workflow
 
 - `pnpm install` once at root. `pnpm dev` brings up studio (devmux pulls api as a

@@ -7,6 +7,7 @@ import {
   type Node,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { Badge } from '@ch5me/ch5-ui-web';
 import { checkContinuity } from '@ch5me/storygen-continuity';
 import type { Project } from '@ch5me/storygen-schema';
 import {
@@ -130,27 +131,21 @@ function SceneNode({ data }: { data: SceneNodeData }): React.ReactElement {
   const hasMissingAssets = data.missingAssetCount > 0;
   return (
     <div
-      className="min-w-[180px] rounded-md border border-slate-600 bg-slate-800 px-3 py-2 text-sm shadow"
+      className="bg-card text-card-foreground min-w-[180px] rounded-md border px-3 py-2 text-sm shadow-sm"
       data-scene-id={data.sceneId}
     >
-      <div className="font-semibold text-slate-100">{data.label}</div>
-      <div className="mt-0.5 text-[11px] text-slate-400">{data.sceneId}</div>
+      <div className="font-semibold">{data.label}</div>
+      <div className="text-muted-foreground mt-0.5 text-[11px]">{data.sceneId}</div>
       <div className="mt-1 flex gap-1">
         {hasContinuity ? (
-          <span
-            className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-medium text-amber-300"
-            data-badge="continuity"
-          >
+          <Badge variant="secondary" className="text-[10px]" data-badge="continuity">
             {data.continuityCount} continuity
-          </span>
+          </Badge>
         ) : null}
         {hasMissingAssets ? (
-          <span
-            className="rounded bg-rose-500/20 px-1.5 py-0.5 text-[10px] font-medium text-rose-300"
-            data-badge="missing-assets"
-          >
+          <Badge variant="destructive" className="text-[10px]" data-badge="missing-assets">
             {data.missingAssetCount} missing asset
-          </span>
+          </Badge>
         ) : null}
       </div>
     </div>

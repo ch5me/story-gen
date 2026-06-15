@@ -1,4 +1,14 @@
 import { useState } from 'react';
+import {
+  Button,
+  Card,
+  CardContent,
+  ScrollArea,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@ch5me/ch5-ui-web';
 import type { EntityKind, Project } from '@ch5me/storygen-schema';
 
 interface WorldBibleProps {
@@ -27,58 +37,56 @@ const TABS: { kind: EntityKind; label: string }[] = [
  */
 export function WorldBible({ project }: WorldBibleProps): React.ReactElement {
   const [activeKind, setActiveKind] = useState<EntityKind>('character');
-  const rows = entityRows(project, activeKind);
   const labelById = entityLabelIndex(project);
 
   return (
-    <div className="flex h-full" data-view="world-bible">
-      <nav className="w-44 shrink-0 border-r border-slate-800 p-2">
-        <h2 className="px-1 pb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Entities
-        </h2>
-        <ul className="space-y-0.5">
+    <Tabs
+      value={activeKind}
+      onValueChange={(value) => setActiveKind(value as EntityKind)}
+      className="flex h-full flex-col"
+      data-view="world-bible"
+    >
+      <div className="border-b p-2">
+        <TabsList variant="line">
           {TABS.map((tab) => (
-            <li key={tab.kind}>
-              <button
-                type="button"
-                onClick={() => setActiveKind(tab.kind)}
-                aria-pressed={tab.kind === activeKind}
-                className={`w-full rounded px-2 py-1 text-left text-sm ${
-                  tab.kind === activeKind
-                    ? 'bg-sky-600/30 text-sky-200'
-                    : 'text-slate-300 hover:bg-slate-800'
-                }`}
-              >
-                {tab.label}
-              </button>
-            </li>
+            <TabsTrigger key={tab.kind} value={tab.kind}>
+              {tab.label}
+            </TabsTrigger>
           ))}
-        </ul>
-      </nav>
-
-      <div className="flex-1 overflow-y-auto p-4">
-        <h1 className="mb-3 text-lg font-semibold text-slate-100">
-          {TABS.find((tab) => tab.kind === activeKind)?.label ?? 'Entities'}
-        </h1>
-        <ul className="space-y-2">
-          {rows.map((row) => (
-            <li
-              key={row.id}
-              className="rounded border border-slate-800 bg-slate-900/50 p-2"
-              data-entity-id={row.id}
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="text-sm font-medium text-slate-100">{row.label}</span>
-                <span className="text-[11px] text-slate-500">{row.id}</span>
-              </div>
-              {row.detail ? <p className="mt-0.5 text-xs text-slate-400">{row.detail}</p> : null}
-              <CrossLinks project={project} entityId={row.id} labelById={labelById} />
-            </li>
-          ))}
-          {rows.length === 0 ? <li className="text-sm text-slate-500">No entities.</li> : null}
-        </ul>
+        </TabsList>
       </div>
-    </div>
+
+      {TABS.map((tab) => (
+        <TabsContent key={tab.kind} value={tab.kind} className="min-h-0 flex-1">
+          <ScrollArea className="h-full">
+            <div className="p-4">
+              <h1 className="mb-3 text-lg font-semibold">{tab.label}</h1>
+              <ul className="space-y-2">
+                {entityRows(project, tab.kind).map((row) => (
+                  <li key={row.id}>
+                    <Card data-entity-id={row.id}>
+                      <CardContent>
+                        <div className="flex items-baseline justify-between">
+                          <span className="text-sm font-medium">{row.label}</span>
+                          <span className="text-muted-foreground text-[11px]">{row.id}</span>
+                        </div>
+                        {row.detail ? (
+                          <p className="text-muted-foreground mt-0.5 text-xs">{row.detail}</p>
+                        ) : null}
+                        <CrossLinks project={project} entityId={row.id} labelById={labelById} />
+                      </CardContent>
+                    </Card>
+                  </li>
+                ))}
+                {entityRows(project, tab.kind).length === 0 ? (
+                  <li className="text-muted-foreground text-sm">No entities.</li>
+                ) : null}
+              </ul>
+            </div>
+          </ScrollArea>
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }
 
@@ -101,14 +109,16 @@ function CrossLinks({
         const otherId = link.fromId === entityId ? link.toId : link.fromId;
         const direction = link.fromId === entityId ? '→' : '←';
         return (
-          <button
+          <Button
             key={link.id}
             type="button"
-            className="rounded border border-dashed border-slate-600 bg-slate-800/60 px-1.5 py-0.5 text-xs text-slate-300 hover:border-sky-500"
+            variant="outline"
+            size="xs"
+            className="border-dashed font-normal"
             title="Edit cross-link"
           >
             {link.relation} {direction} {labelById.get(otherId) ?? otherId}
-          </button>
+          </Button>
         );
       })}
     </div>

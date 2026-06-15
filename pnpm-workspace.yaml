@@ -10,4 +10,10 @@ allowBuilds:
   '@cloudflare/workerd-darwin-64': true
   '@cloudflare/workerd-darwin-arm64': true
 
+overrides:
+  # @ch5me/motion@0.3.1 was published without its dist/ — pin to 0.3.2 (ships
+  # dist) so the @ch5me/ch5-ui-web barrel (navigation-menu/sidebar -> motion)
+  # imports cleanly. Remove once a fixed 0.3.1 is unnecessary.
+  '@ch5me/motion': 0.3.2
+
 nodeLinker: hoisted

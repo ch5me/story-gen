@@ -10,12 +10,17 @@ const PACKAGES_DIR = '/Users/hassoncs/src/ch5/story-gen/packages';
  * required. Keeping the alias list explicit (rather than a glob) makes a missing
  * or renamed package fail loudly at resolve time.
  */
-const storygenAlias = (name: string): { find: string; replacement: string } => ({
+interface AliasEntry {
+  find: string | RegExp;
+  replacement: string;
+}
+
+const storygenAlias = (name: string): AliasEntry => ({
   find: `@ch5me/storygen-${name}`,
   replacement: `${PACKAGES_DIR}/storygen-${name}/src/index.ts`,
 });
 
-export const storygenAliases = [
+export const storygenAliases: AliasEntry[] = [
   storygenAlias('schema'),
   storygenAlias('compiler'),
   storygenAlias('continuity'),
@@ -24,7 +29,7 @@ export const storygenAliases = [
 ];
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [tailwindcss(), react()],
   resolve: {
     alias: storygenAliases,
     preserveSymlinks: true,

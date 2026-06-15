@@ -1,4 +1,18 @@
 import { useState } from 'react';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Label,
+  NativeSelect,
+  NativeSelectOption,
+  ScrollArea,
+  Textarea,
+  cn,
+} from '@ch5me/ch5-ui-web';
 import type {
   Beat,
   Character,
@@ -33,56 +47,63 @@ export function SceneEditor({ project, onChange }: SceneEditorProps): React.Reac
   const scene = scenes.find((s) => s.id === selectedSceneId) ?? scenes[0];
 
   if (!scene) {
-    return <div className="p-4 text-slate-400">This story has no scenes.</div>;
+    return <div className="text-muted-foreground p-4">This story has no scenes.</div>;
   }
 
   return (
     <div className="flex h-full" data-view="scene-editor">
-      <nav className="w-52 shrink-0 overflow-y-auto border-r border-slate-800 p-2">
-        <h2 className="px-1 pb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Scenes
-        </h2>
-        <ul className="space-y-0.5">
-          {scenes.map((s) => (
-            <li key={s.id}>
-              <button
-                type="button"
-                onClick={() => setSelectedSceneId(s.id)}
-                aria-pressed={s.id === scene.id}
-                className={`w-full rounded px-2 py-1 text-left text-sm ${
-                  s.id === scene.id
-                    ? 'bg-sky-600/30 text-sky-200'
-                    : 'text-slate-300 hover:bg-slate-800'
-                }`}
-              >
-                {s.title}
-              </button>
-            </li>
-          ))}
-        </ul>
+      <nav className="w-52 shrink-0 border-r" aria-label="Scenes">
+        <ScrollArea className="h-full">
+          <div className="p-2">
+            <h2 className="text-muted-foreground px-2 pb-2 text-xs font-semibold uppercase tracking-wide">
+              Scenes
+            </h2>
+            <ul className="flex flex-col gap-0.5">
+              {scenes.map((s) => {
+                const active = s.id === scene.id;
+                return (
+                  <li key={s.id}>
+                    <Button
+                      type="button"
+                      variant={active ? 'secondary' : 'ghost'}
+                      size="sm"
+                      aria-pressed={active}
+                      onClick={() => setSelectedSceneId(s.id)}
+                      className={cn('w-full justify-start', active && 'font-medium')}
+                    >
+                      {s.title}
+                    </Button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </ScrollArea>
       </nav>
 
-      <div className="flex-1 overflow-y-auto p-4">
-        <header className="mb-3">
-          <h1 className="text-lg font-semibold text-slate-100">{scene.title}</h1>
-          {scene.summary ? <p className="text-sm text-slate-400">{scene.summary}</p> : null}
-        </header>
+      <ScrollArea className="flex-1">
+        <div className="p-4">
+          <header className="mb-3">
+            <h1 className="text-lg font-semibold">{scene.title}</h1>
+            {scene.summary ? <p className="text-muted-foreground text-sm">{scene.summary}</p> : null}
+          </header>
 
-        <PlotGridStrip project={project} sceneId={scene.id} />
+          <PlotGridStrip project={project} sceneId={scene.id} />
 
-        <ol className="mt-4 space-y-3">
-          {scene.beats.map((beat) => (
-            <li key={beat.id}>
-              <BeatEditor
-                beat={beat}
-                scene={scene}
-                characters={project.world.characters}
-                onBeatChange={(next) => onChange(replaceBeat(project, beat.id, next))}
-              />
-            </li>
-          ))}
-        </ol>
-      </div>
+          <ol className="mt-4 space-y-3">
+            {scene.beats.map((beat) => (
+              <li key={beat.id}>
+                <BeatEditor
+                  beat={beat}
+                  scene={scene}
+                  characters={project.world.characters}
+                  onBeatChange={(next) => onChange(replaceBeat(project, beat.id, next))}
+                />
+              </li>
+            ))}
+          </ol>
+        </div>
+      </ScrollArea>
     </div>
   );
 }
@@ -99,37 +120,38 @@ function PlotGridStrip({
   const threadsById = new Map(project.world.plotThreads.map((thread) => [thread.id, thread]));
 
   return (
-    <section
-      className="rounded border border-slate-800 bg-slate-900/60 p-2"
-      data-region="plot-grid"
-      aria-label="Plot threads linked to this scene"
-    >
-      <h3 className="pb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
-        Plot threads
-      </h3>
-      {links.length === 0 ? (
-        <p className="text-xs text-slate-500">No plot threads linked.</p>
-      ) : (
-        <div className="flex flex-wrap gap-1.5">
-          {links.map((link) => {
-            const thread = threadsById.get(link.plotThreadId);
-            return (
-              <span
-                key={link.id}
-                className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 px-2 py-0.5 text-xs text-slate-200"
-                data-plot-thread={link.plotThreadId}
-              >
-                <span
-                  className="inline-block h-2 w-2 rounded-full"
-                  style={{ background: thread?.color ?? '#64748b' }}
-                />
-                {thread?.name ?? link.plotThreadId}
-              </span>
-            );
-          })}
-        </div>
-      )}
-    </section>
+    <Card data-region="plot-grid" aria-label="Plot threads linked to this scene">
+      <CardHeader>
+        <CardTitle className="text-muted-foreground text-xs font-semibold uppercase tracking-wide">
+          Plot threads
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {links.length === 0 ? (
+          <p className="text-muted-foreground text-xs">No plot threads linked.</p>
+        ) : (
+          <div className="flex flex-wrap gap-1.5">
+            {links.map((link) => {
+              const thread = threadsById.get(link.plotThreadId);
+              return (
+                <Badge
+                  key={link.id}
+                  variant="outline"
+                  className="gap-1.5"
+                  data-plot-thread={link.plotThreadId}
+                >
+                  <span
+                    className="inline-block h-2 w-2 rounded-full"
+                    style={{ background: thread?.color ?? 'var(--ff-subtle)' }}
+                  />
+                  {thread?.name ?? link.plotThreadId}
+                </Badge>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -142,19 +164,23 @@ interface BeatEditorProps {
 
 function BeatEditor({ beat, characters, onBeatChange }: BeatEditorProps): React.ReactElement {
   return (
-    <div className="rounded border border-slate-800 bg-slate-900/40 p-3" data-beat-id={beat.id}>
-      <div className="mb-1.5 flex items-center gap-2 text-[11px] uppercase tracking-wide text-slate-500">
-        <span className="rounded bg-slate-800 px-1.5 py-0.5">{beat.kind}</span>
-        <span>{beat.id}</span>
-      </div>
-      {beat.kind === 'narration' ? (
-        <NarrationFields beat={beat} onBeatChange={onBeatChange} />
-      ) : beat.kind === 'dialogue' ? (
-        <DialogueFields beat={beat} characters={characters} onBeatChange={onBeatChange} />
-      ) : (
-        <ReadOnlyBeat beat={beat} />
-      )}
-    </div>
+    <Card data-beat-id={beat.id}>
+      <CardHeader>
+        <div className="text-muted-foreground flex items-center gap-2 text-[11px] uppercase tracking-wide">
+          <Badge variant="secondary">{beat.kind}</Badge>
+          <span>{beat.id}</span>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {beat.kind === 'narration' ? (
+          <NarrationFields beat={beat} onBeatChange={onBeatChange} />
+        ) : beat.kind === 'dialogue' ? (
+          <DialogueFields beat={beat} characters={characters} onBeatChange={onBeatChange} />
+        ) : (
+          <ReadOnlyBeat beat={beat} />
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -168,15 +194,15 @@ function NarrationFields({
   const id = `narration-${beat.id}`;
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-xs text-slate-400">
+      <Label htmlFor={id} className="text-muted-foreground mb-1 text-xs">
         Narration
-      </label>
-      <textarea
+      </Label>
+      <Textarea
         id={id}
         value={beat.text}
         onChange={(event) => onBeatChange({ ...beat, text: event.target.value })}
-        className="w-full resize-y rounded border border-slate-700 bg-slate-950 p-2 text-sm text-slate-100"
         rows={2}
+        className="resize-y"
       />
     </div>
   );
@@ -201,28 +227,31 @@ function DialogueFields({
     <div className="space-y-2">
       <div className="grid grid-cols-3 gap-2">
         <div>
-          <label htmlFor={charId} className="mb-1 block text-xs text-slate-400">
+          <Label htmlFor={charId} className="text-muted-foreground mb-1 text-xs">
             Character
-          </label>
-          <select
+          </Label>
+          <NativeSelect
             id={charId}
+            size="sm"
+            className="w-full"
             value={beat.characterId}
             onChange={(event) => onBeatChange({ ...beat, characterId: event.target.value })}
-            className="w-full rounded border border-slate-700 bg-slate-950 p-1.5 text-sm text-slate-100"
           >
             {characters.map((c) => (
-              <option key={c.id} value={c.id}>
+              <NativeSelectOption key={c.id} value={c.id}>
                 {c.name}
-              </option>
+              </NativeSelectOption>
             ))}
-          </select>
+          </NativeSelect>
         </div>
         <div>
-          <label htmlFor={exprId} className="mb-1 block text-xs text-slate-400">
+          <Label htmlFor={exprId} className="text-muted-foreground mb-1 text-xs">
             Expression
-          </label>
-          <select
+          </Label>
+          <NativeSelect
             id={exprId}
+            size="sm"
+            className="w-full"
             value={beat.expression ?? ''}
             onChange={(event) =>
               onBeatChange({
@@ -230,22 +259,23 @@ function DialogueFields({
                 expression: event.target.value === '' ? undefined : event.target.value,
               })
             }
-            className="w-full rounded border border-slate-700 bg-slate-950 p-1.5 text-sm text-slate-100"
           >
-            <option value="">(none)</option>
+            <NativeSelectOption value="">(none)</NativeSelectOption>
             {(character?.expressions ?? []).map((expr) => (
-              <option key={expr} value={expr}>
+              <NativeSelectOption key={expr} value={expr}>
                 {expr}
-              </option>
+              </NativeSelectOption>
             ))}
-          </select>
+          </NativeSelect>
         </div>
         <div>
-          <label htmlFor={outfitId} className="mb-1 block text-xs text-slate-400">
+          <Label htmlFor={outfitId} className="text-muted-foreground mb-1 text-xs">
             Outfit
-          </label>
-          <select
+          </Label>
+          <NativeSelect
             id={outfitId}
+            size="sm"
+            className="w-full"
             value={beat.outfitId ?? ''}
             onChange={(event) =>
               onBeatChange({
@@ -253,27 +283,26 @@ function DialogueFields({
                 outfitId: event.target.value === '' ? undefined : event.target.value,
               })
             }
-            className="w-full rounded border border-slate-700 bg-slate-950 p-1.5 text-sm text-slate-100"
           >
-            <option value="">(none)</option>
+            <NativeSelectOption value="">(none)</NativeSelectOption>
             {(character?.outfits ?? []).map((outfit) => (
-              <option key={outfit.id} value={outfit.id}>
+              <NativeSelectOption key={outfit.id} value={outfit.id}>
                 {outfit.name}
-              </option>
+              </NativeSelectOption>
             ))}
-          </select>
+          </NativeSelect>
         </div>
       </div>
       <div>
-        <label htmlFor={textId} className="mb-1 block text-xs text-slate-400">
+        <Label htmlFor={textId} className="text-muted-foreground mb-1 text-xs">
           Line
-        </label>
-        <textarea
+        </Label>
+        <Textarea
           id={textId}
           value={beat.text}
           onChange={(event) => onBeatChange({ ...beat, text: event.target.value })}
-          className="w-full resize-y rounded border border-slate-700 bg-slate-950 p-2 text-sm text-slate-100"
           rows={2}
+          className="resize-y"
         />
       </div>
     </div>
@@ -282,7 +311,7 @@ function DialogueFields({
 
 function ReadOnlyBeat({ beat }: { beat: Beat }): React.ReactElement {
   const summary = beatSummary(beat);
-  return <p className="text-sm text-slate-300">{summary}</p>;
+  return <p className="text-foreground/80 text-sm">{summary}</p>;
 }
 
 function beatSummary(beat: Beat): string {

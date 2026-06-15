@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  ScrollArea,
+} from '@ch5me/ch5-ui-web';
+import { Sparkles, Upload } from 'lucide-react';
 import type { Asset, AssetStatus, Project } from '@ch5me/storygen-schema';
 import { compileCharacterPrompt } from '@ch5me/storygen-prompt-compiler';
 
@@ -47,110 +55,107 @@ export function AssetLab({ project }: AssetLabProps): React.ReactElement {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4" data-view="asset-lab">
-      <header className="mb-3 flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-slate-100">Asset Lab</h1>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            disabled
-            className="cursor-not-allowed rounded border border-slate-700 px-3 py-1.5 text-sm text-slate-500"
-            title="Manual upload (stub)"
-          >
-            Upload
-          </button>
-          <button
-            type="button"
-            onClick={mockGenerate}
-            disabled={!firstCharacterId}
-            className="rounded bg-sky-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-500 disabled:opacity-50"
-          >
-            Mock generate
-          </button>
-        </div>
-      </header>
+    <ScrollArea className="h-full" data-view="asset-lab">
+      <div className="p-4">
+        <header className="mb-3 flex items-center justify-between">
+          <h1 className="text-lg font-semibold">Asset Lab</h1>
+          <div className="flex gap-2">
+            <Button type="button" variant="outline" size="sm" disabled title="Manual upload (stub)">
+              <Upload aria-hidden />
+              Upload
+            </Button>
+            <Button type="button" size="sm" onClick={mockGenerate} disabled={!firstCharacterId}>
+              <Sparkles aria-hidden />
+              Mock generate
+            </Button>
+          </div>
+        </header>
 
-      <section className="mb-5">
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          World assets
-        </h2>
-        <ul className="grid grid-cols-2 gap-2 lg:grid-cols-3">
-          {project.world.assets.map((asset) => (
-            <AssetCard key={asset.id} asset={asset} />
-          ))}
-          {project.world.assets.length === 0 ? (
-            <li className="text-sm text-slate-500">No assets yet.</li>
-          ) : null}
-        </ul>
-      </section>
-
-      <section>
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Candidate gallery
-        </h2>
-        {candidates.length === 0 ? (
-          <p className="text-sm text-slate-500">
-            No candidates yet. Use Mock generate to add one.
-          </p>
-        ) : (
-          <ul className="grid grid-cols-2 gap-2 lg:grid-cols-3" data-region="candidates">
-            {candidates.map((candidate) => (
-              <li
-                key={candidate.id}
-                className="rounded border border-slate-800 bg-slate-900/50 p-2"
-                data-candidate-id={candidate.id}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-slate-100">{candidate.label}</span>
-                  <StatusPill status={candidate.status} />
-                </div>
-                <p className="mt-1 line-clamp-3 text-xs text-slate-400">{candidate.prompt}</p>
-                <div className="mt-2 flex gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => setCandidateStatus(candidate.id, 'approved')}
-                    className="rounded bg-emerald-600/80 px-2 py-0.5 text-xs text-white hover:bg-emerald-500"
-                  >
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCandidateStatus(candidate.id, 'locked')}
-                    className="rounded bg-amber-600/80 px-2 py-0.5 text-xs text-white hover:bg-amber-500"
-                  >
-                    Lock
-                  </button>
-                </div>
-              </li>
+        <section className="mb-5">
+          <h2 className="text-muted-foreground mb-2 text-xs font-semibold uppercase tracking-wide">
+            World assets
+          </h2>
+          <ul className="grid grid-cols-2 gap-2 lg:grid-cols-3">
+            {project.world.assets.map((asset) => (
+              <AssetCard key={asset.id} asset={asset} />
             ))}
+            {project.world.assets.length === 0 ? (
+              <li className="text-muted-foreground text-sm">No assets yet.</li>
+            ) : null}
           </ul>
-        )}
-      </section>
-    </div>
+        </section>
+
+        <section>
+          <h2 className="text-muted-foreground mb-2 text-xs font-semibold uppercase tracking-wide">
+            Candidate gallery
+          </h2>
+          {candidates.length === 0 ? (
+            <p className="text-muted-foreground text-sm">
+              No candidates yet. Use Mock generate to add one.
+            </p>
+          ) : (
+            <ul className="grid grid-cols-2 gap-2 lg:grid-cols-3" data-region="candidates">
+              {candidates.map((candidate) => (
+                <li key={candidate.id}>
+                  <Card data-candidate-id={candidate.id}>
+                    <CardContent>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">{candidate.label}</span>
+                        <StatusPill status={candidate.status} />
+                      </div>
+                      <p className="text-muted-foreground mt-1 line-clamp-3 text-xs">
+                        {candidate.prompt}
+                      </p>
+                      <div className="mt-2 flex gap-1.5">
+                        <Button
+                          type="button"
+                          size="xs"
+                          onClick={() => setCandidateStatus(candidate.id, 'approved')}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="xs"
+                          onClick={() => setCandidateStatus(candidate.id, 'locked')}
+                        >
+                          Lock
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
+    </ScrollArea>
   );
 }
 
 function AssetCard({ asset }: { asset: Asset }): React.ReactElement {
   return (
-    <li
-      className="rounded border border-slate-800 bg-slate-900/50 p-2"
-      data-asset-id={asset.id}
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-slate-100">{asset.caption ?? asset.id}</span>
-        <StatusPill status={asset.status} />
-      </div>
-      <div className="mt-0.5 text-[11px] text-slate-500">{asset.kind}</div>
+    <li data-asset-id={asset.id}>
+      <Card>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium">{asset.caption ?? asset.id}</span>
+            <StatusPill status={asset.status} />
+          </div>
+          <div className="text-muted-foreground mt-0.5 text-[11px]">{asset.kind}</div>
+        </CardContent>
+      </Card>
     </li>
   );
 }
 
 function StatusPill({ status }: { status: AssetStatus }): React.ReactElement {
-  const tone =
-    status === 'locked'
-      ? 'bg-amber-500/20 text-amber-300'
-      : status === 'approved'
-        ? 'bg-emerald-500/20 text-emerald-300'
-        : 'bg-slate-700 text-slate-300';
-  return <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${tone}`}>{status}</span>;
+  const variant = status === 'locked' || status === 'approved' ? 'secondary' : 'outline';
+  return (
+    <Badge variant={variant} className="font-medium">
+      {status}
+    </Badge>
+  );
 }

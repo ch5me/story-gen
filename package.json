@@ -30,5 +30,8 @@
     "@chriscode/hush": "^7.4.0",
     "turbo": "^2.7.2",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
   }
 }

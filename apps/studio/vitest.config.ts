@@ -5,7 +5,7 @@ import { storygenAliases } from './vite.config';
  * Vitest is kept separate from the Vite app config so the React app config can
  * pin `vite@6` (and its `@vitejs/plugin-react` plugin type) while Vitest runs on
  * its own bundled Vite. We do NOT register the React plugin here: esbuild's
- * automatic JSX runtime (below) transforms `.tsx` for tests, and the package
+ * automatic JSX runtime (below) transforms `.tsx` for tests, and the storygen
  * source aliases are shared from `vite.config.ts` so both surfaces resolve
  * imports identically.
  */
