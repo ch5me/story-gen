@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*local
+.env.*
+!.env.example
+.dev.vars
+.wrangler/
+.hush.local
+!.hush/manifest.encrypted
+!.hush/files/**/*.encrypted
+.hush-materialized/
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test artifacts
+coverage/
+test-results/
+playwright-report/
+
+# Local data
+*.db
+*.sqlite
+
+# Turbo
+.turbo/*
+**/.turbo/*
+!.turbo/config.json
+
+# Sisyphus ephemeral state (goal doc stays tracked)
+.sisyphus/evidence/
+.sisyphus/run-continuation/
+!.sisyphus/goals/
+!.sisyphus/goals/current-goal.md

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "typecheck"],
+      "outputs": ["dist/**", "build/**", "**/*.d.ts"],
+      "inputs": ["src/**", "tsconfig.json", "vite.config.*", "index.html"],
+      "passThroughEnv": ["PATH", "HOME", "SHELL", "NVM_BIN", "NVM_DIR"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "inputs": ["src/**", "tsconfig.json", "*.ts", "*.tsx"],
+      "passThroughEnv": ["PATH", "HOME", "SHELL", "NVM_BIN", "NVM_DIR"]
+    },
+    "lint": {
+      "dependsOn": [],
+      "outputs": [],
+      "inputs": ["src/**"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "inputs": ["src/**", "vitest.config.*", "vitest.setup.*"],
+      "passThroughEnv": ["PATH", "HOME", "SHELL", "NVM_BIN", "NVM_DIR"]
+    },
+    "db:generate": { "cache": false, "dependsOn": [] },
+    "db:migrate": { "cache": false, "dependsOn": [] }
+  }
+}

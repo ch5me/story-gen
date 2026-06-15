@@ -1,0 +1,16 @@
+# StoryGen Hush template — placeholders only, never live values.
+# Stage-split runtime targets are mandatory (CH5 policy): dev / staging / prod.
+# Materialize per-target with `hush` once real secrets exist. The first slice
+# needs NO secrets (api uses an in-memory adapter), so these are forward-looking.
+#
+# target: dev
+#   STORYGEN_D1_DATABASE_ID=<placeholder>
+#   STORYGEN_R2_BUCKET=<placeholder>
+#   COMFYUI_BASE_URL=<placeholder>     # generation adapter, v2
+#   TTS_API_KEY=<placeholder>          # voice adapter, v2
+#
+# target: staging
+#   (same keys, staging-scoped values)
+#
+# target: prod
+#   (same keys, prod-scoped values)

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "project": "storygen",
+  "defaults": {
+    "startupTimeoutSeconds": 90
+  },
+  "proxy": {
+    "enabled": true,
+    "hostnamePattern": "{service}.{project}.localhost"
+  },
+  "services": {
+    "api": {
+      "cwd": "apps/api",
+      "command": "pnpm dev",
+      "health": { "type": "port", "port": 48787 },
+      "proxy": true,
+      "dashboard": true
+    },
+    "studio": {
+      "cwd": "apps/studio",
+      "command": "env VITE_PUBLIC_API_URL=http://api.storygen.localhost:48787 pnpm dev",
+      "health": { "type": "port", "port": 45180 },
+      "proxy": true,
+      "dashboard": true,
+      "dependsOn": ["api"]
+    },
+    "reader": {
+      "cwd": "apps/reader",
+      "command": "pnpm dev",
+      "health": { "type": "port", "port": 45181 },
+      "proxy": true,
+      "dashboard": true
+    }
+  }
+}
