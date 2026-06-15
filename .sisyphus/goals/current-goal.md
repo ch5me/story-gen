@@ -76,8 +76,8 @@ three apps; studio renders the seeded project; reader advances + chooses a route
 Preview plays the compiled story; Ren'Py deterministic; Ink validates via inkjs;
 prompt compiler deterministic (seeded Tracery); continuity catches drift.
 
-**Remaining:** repo has no git remote configured (local-only) — push is blocked
-until a remote exists. Awaiting decision on creating/attaching one.
+**Landed:** pushed to `git@github.com:ch5me/story-gen` (private), `main` tracks
+`origin/main`. Goal achieved end-to-end.
 
 ## Plan
 
