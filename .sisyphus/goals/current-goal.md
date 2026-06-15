@@ -60,19 +60,24 @@ exports it, continuity checks catch drift.
 
 ## Current State
 
-- **Wave A: DONE + committed** (`1df81c7`). Root scaffold (pnpm/turbo/devmux/hush,
-  node 24, pnpm 11 allowBuilds), `@ch5me/storygen-schema` authored and green
-  (tsc build + 5 vitest tests), all research/architecture/policy docs landed.
-  Workspace installs clean.
-- **Scaffolded** all 6 package + 3 app manifests/tsconfigs; full dependency graph
-  installed (react 19, vite 6, @xyflow/react, hono, wrangler, inkjs, tracery,
-  testing-library). Schema dist built so consumers resolve.
-- **Wave B: IN FLIGHT** — agent swarm (Workflow `wp8ayzget`) building compiler,
-  continuity, prompt-compiler, generation, player, research in parallel, each
-  self-verifying `typecheck` + `test` against the pinned schema API.
-- **Wave C: staged** (`/tmp/storygen-wave-c.mjs`) — api, studio, reader.
-- Pending after B/C: turbo typecheck+test+build green across the graph, dev/app
-  smoke, Ren'Py/Ink/continuity proofs, final commit + push.
+**COMPLETE (first slice).** Built end-to-end by the agent swarm, waves A→D.
+
+- **Wave A** (`1df81c7`): scaffold + `@ch5me/storygen-schema` (green).
+- **Wave B** (`fb5ff4d`): 6 domain packages (compiler, continuity,
+  prompt-compiler, generation, player, research) — swarm-built, all green.
+- **Wave C** (`1dec786`): apps studio + api + reader — swarm-built, all green.
+- **Wave D**: full-graph `turbo typecheck + test + build` GREEN (30/30 tasks,
+  87 tests). Live boot proven: api :48787 (`/health` ok, seeded project served,
+  `/compile` → v1 web manifest + Ren'Py + Ink), studio :45180 and reader :45181
+  both serve. Re-verify with `bash scripts/smoke-acceptance.sh`.
+
+Acceptance criteria all met: install/typecheck/test/build green; dev starts all
+three apps; studio renders the seeded project; reader advances + chooses a route;
+Preview plays the compiled story; Ren'Py deterministic; Ink validates via inkjs;
+prompt compiler deterministic (seeded Tracery); continuity catches drift.
+
+**Remaining:** repo has no git remote configured (local-only) — push is blocked
+until a remote exists. Awaiting decision on creating/attaching one.
 
 ## Plan
 
