@@ -1,0 +1,20 @@
+name = "storygen-api"
+main = "src/index.worker.ts"
+compatibility_date = "2025-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Bindings are declared for parity; the first slice runs entirely in-memory and
+# does NOT read these (the Worker uses InMemoryStorageAdapter). Real ids land in
+# v2 when D1StorageAdapter / R2 asset storage are implemented.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "storygen"
+database_id = "placeholder-d1-database-id"
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "storygen-assets"
+
+[vars]
+ENVIRONMENT = "development"

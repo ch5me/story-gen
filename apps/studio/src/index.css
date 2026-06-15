@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+/* Dense editor-shell defaults. Tailwind utilities carry the rest. */
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #0b0e14;
+  color: #e6e9ef;
+}
