@@ -39,8 +39,17 @@ Preview the compiled story, and open the reader to play it.
 | `pnpm build` / `typecheck` / `test` | turbo across the graph |
 | `pnpm svc:status` / `svc:attach` / `svc:stop` | devmux service control |
 
+## For collaborators / external agents
+
+New here (or pointing an agent at this repo)? Start with **`ONBOARDING.md`** — it
+gives the read-order and a 60-second map. If you build **character/image
+generation** and want to integrate, go straight to
+**`docs/integration/character-generation.md`**.
+
 ## Docs
 
+- `ONBOARDING.md` — read-this-first entrypoint (humans + agents).
+- `docs/integration/character-generation.md` — integrate a character-generation system.
 - `docs/plan/storygen-bootstrap-checklist.md` — implementation checklist.
 - `docs/architecture/story-production-system.md` — canonical-DB/adapters doctrine.
 - `docs/research/story-tools.md` — Embed/Fork/Study matrix of external tools.
