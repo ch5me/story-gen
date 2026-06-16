@@ -19,6 +19,11 @@ jobs:
     # env var does. Needed because @ch5me packages were (re)published <24h ago
     # during the registry cutover and trip pnpm's default 24h supply-chain hold.
     env:
+      # Provide the token via env so run-step scripts reference plain ${NPM_TOKEN}.
+      # A `${{ secrets.* }}` expression INSIDE a run: body makes Forgejo's Actions
+      # parser silently drop run creation (no run is ever queued) — use the shell
+      # ${VAR} form sourced from here instead.
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_CONFIG_MINIMUM_RELEASE_AGE: "0"
       # Env-var form (not the project .npmrc) is what actually propagates to the
       # pnpm subprocess turbo spawns for each `pnpm typecheck`/`build` — which
@@ -50,7 +55,7 @@ jobs:
         #     minimumReleaseAge config in that nested context and fails. Disabling
         #     the pre-run verify stops the second install entirely.
         run: |
-          echo "//npm.ch5.me/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          echo "//npm.ch5.me/:_authToken=${NPM_TOKEN}" >> .npmrc
           echo "minimumReleaseAge=0" >> .npmrc
           echo "verify-deps-before-run=false" >> .npmrc
 
