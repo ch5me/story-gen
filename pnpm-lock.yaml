@@ -763,19 +763,19 @@ packages:
         optional: true
 
   '@ch5me/ch5-design-web@0.1.2':
-    resolution: {integrity: sha512-w+cTH8GTzNH//AwQMyV5gpaOe4MglH9piAgl5y5jNZsHmDQviMQdASFYB+QW0fqByw+McN5KzdIH8yh8k7ZzBg==, tarball: https://npm.ch5.me/@ch5me/ch5-design-web/-/ch5-design-web-0.1.2.tgz}
+    resolution: {integrity: sha512-WhuuaIlo/xtlDfpnX1hTcfVT17iAnP6V5Ei4zOuY18GiKqU/Hwg0AdBnvySbZEEjURdpfzzHvlYOa2hZHlMATA==}
 
   '@ch5me/ch5-ui-web@0.3.1':
-    resolution: {integrity: sha512-zkGLBc/QAwNKzXmmeyHPQpz0FHgAoTp1UJqQklIDNE8Az475GV8jVgIkzBUyfgEDHZOsgmUCVGS7XG/XYnLeww==, tarball: https://npm.ch5.me/@ch5me/ch5-ui-web/-/ch5-ui-web-0.3.1.tgz}
+    resolution: {integrity: sha512-gZCXEvBzGxFXt0h4oeut/oDdXiN1sLqW7duCEVCl9HBMk8QGs0NHyOX8lGVJBf+JZixH9sDxC4nbW4wRDL0XmQ==}
     peerDependencies:
       lucide-react: '>=0.469.0'
       react: '>=19'
 
   '@ch5me/firefly-design@0.1.3':
-    resolution: {integrity: sha512-fwE3fRAxRlmxHFOw+Ml/zAe38LNhWYx/Orseiiv+wLbB7SBiyiu5ye2hGTvnSiaW8B1zGLOSopVui+GHLe34oQ==, tarball: https://npm.ch5.me/@ch5me/firefly-design/-/firefly-design-0.1.3.tgz}
+    resolution: {integrity: sha512-FwXvxkFfbFUO2kvB0zOZCMtlRP8hLKbBAzMT+FvjoOauh0YeHJkzjdgko1d67pI7yKxX34yzH4gMF5oK0XZzqw==}
 
   '@ch5me/motion@0.3.2':
-    resolution: {integrity: sha512-iR4gWzdzGAlkn/9JWmCW8MB8CWuF/Mhy8E/yx1ukh0YL/zSikt6rpQbHVyO7hCFsVyOp3YCX5e+cjvOW/VfI2w==, tarball: https://npm.ch5.me/@ch5me/motion/-/motion-0.3.2.tgz}
+    resolution: {integrity: sha512-EOjqwTUDTirUcwjS1+1HH6dQUcgoBdVFhzHruLG5C1pg9EPOozmOcWDljkrrsnKJ4KvLCkQwsE6PqVaiRbLv8w==}
     peerDependencies:
       react: '>=19'
       react-native: '>=0.83.2'
@@ -790,7 +790,7 @@ packages:
         optional: true
 
   '@ch5me/vitest-react-native-mocks@0.2.3':
-    resolution: {integrity: sha512-9kenbQozX0E2F7bjJ3fRamHQRqJQueUMgZhuiDNLCXOFL4OzAtmSU4/gsxYRqOoLZ5UDHzXK1/qf7s3BgigE/A==, tarball: https://npm.ch5.me/@ch5me/vitest-react-native-mocks/-/vitest-react-native-mocks-0.2.3.tgz}
+    resolution: {integrity: sha512-+iv/4HNjhF1q5y+NDAKanm6FTU5iG07/HnZJWYiCJaGeRwdq0rEtLsJ0p84jqa3TLu/sTFI5YdoZbAjlcapfRA==}
     peerDependencies:
       '@testing-library/react': '>=16.0.0'
       react: '>=19'
