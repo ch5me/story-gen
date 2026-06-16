@@ -69,12 +69,16 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           npm_config_minimum_release_age: "0"
 
+      # --config.verify-deps-before-run=false on each script: pnpm 11 otherwise
+      # re-runs `pnpm install` + the 24h supply-chain check before every script
+      # (which re-fails on recently-republished @ch5me). The CLI flag is the form
+      # that reliably suppresses it in CI (the .npmrc/env-var forms did not).
       - name: Typecheck
-        run: pnpm typecheck
+        run: pnpm --config.verify-deps-before-run=false typecheck
 
       - name: Test
-        run: pnpm test
+        run: pnpm --config.verify-deps-before-run=false test
         continue-on-error: true
 
       - name: Build
-        run: pnpm build
+        run: pnpm --config.verify-deps-before-run=false build
