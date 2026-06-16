@@ -12,6 +12,14 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    # NPM_CONFIG_MINIMUM_RELEASE_AGE=0 propagates to EVERY pnpm process in the job —
+    # including the implicit `pnpm install` that `pnpm typecheck`/`build` (turbo)
+    # spawn, which re-runs the supply-chain check. A project-.npmrc setting or a
+    # CLI flag on the first install does NOT cover those nested invocations; the
+    # env var does. Needed because @ch5me packages were (re)published <24h ago
+    # during the registry cutover and trip pnpm's default 24h supply-chain hold.
+    env:
+      NPM_CONFIG_MINIMUM_RELEASE_AGE: "0"
     steps:
       - uses: actions/checkout@v4
 
