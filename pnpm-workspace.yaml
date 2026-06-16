@@ -17,3 +17,11 @@ overrides:
   '@ch5me/motion': 0.3.2
 
 nodeLinker: hoisted
+
+# CI installs first-party @ch5me packages (re)published <24h ago during the
+# off-GitHub registry cutover; pnpm 11 defaults a 24h supply-chain hold +
+# re-verify-before-every-script. Both are inappropriate for trusted internal
+# packages and block Dasio/GitHub CI. Workspace-level config is the only layer
+# turbo-spawned per-package `pnpm run` children inherit (.npmrc/env/CLI flags do not).
+minimumReleaseAge: 0
+verifyDepsBeforeRun: false
