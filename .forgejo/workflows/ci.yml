@@ -32,9 +32,14 @@ jobs:
           echo "@ch5me:registry=https://npm.ch5.me/" >> ~/.npmrc
 
       - name: Install dependencies
+        # minimum_release_age=0: CI installs first-party @ch5me packages that may
+        # have been (re)published <24h ago during the registry cutover; pnpm's
+        # default 24h supply-chain hold would otherwise reject them.
         run: pnpm install --frozen-lockfile
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm_config_minimum_release_age: "0"
 
       - name: Typecheck
         run: pnpm typecheck
