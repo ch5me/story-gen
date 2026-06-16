@@ -20,6 +20,10 @@ jobs:
     # during the registry cutover and trip pnpm's default 24h supply-chain hold.
     env:
       NPM_CONFIG_MINIMUM_RELEASE_AGE: "0"
+      # Env-var form (not the project .npmrc) is what actually propagates to the
+      # pnpm subprocess turbo spawns for each `pnpm typecheck`/`build` — which
+      # otherwise re-runs `pnpm install` + the 24h supply-chain check and re-fails.
+      NPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
       - uses: actions/checkout@v4
 
