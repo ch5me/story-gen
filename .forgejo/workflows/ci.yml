@@ -30,6 +30,10 @@ jobs:
         run: |
           echo "//npm.ch5.me/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
           echo "@ch5me:registry=https://npm.ch5.me/" >> ~/.npmrc
+          # Disable pnpm's default 24h supply-chain hold for EVERY pnpm call in the
+          # job (install AND later turbo-script-triggered re-verifies). First-party
+          # @ch5me packages were (re)published <24h ago during the registry cutover.
+          echo "minimumReleaseAge=0" >> ~/.npmrc
 
       - name: Install dependencies
         # minimum_release_age=0: CI installs first-party @ch5me packages that may
