@@ -35,17 +35,20 @@ jobs:
           corepack prepare pnpm@11.5.3 --activate
 
       - name: Configure @ch5me registry
-        # Write into the PROJECT .npmrc (not ~/.npmrc): pnpm reads project-level
-        # config last, so it shadows the user file. The repo .npmrc ships
-        # `_authToken=${NPM_TOKEN}` which pnpm 11 refuses to env-expand for
-        # "repository-controlled registry credentials" — so we append the literal
-        # token line here, and minimumReleaseAge=0 so EVERY pnpm call in the job
-        # (install AND later turbo-script-triggered re-verifies) skips pnpm's
-        # default 24h supply-chain hold on @ch5me packages (re)published <24h ago
-        # during the registry cutover.
+        # Write into the PROJECT .npmrc (pnpm reads project config last; it shadows
+        # ~/.npmrc). The repo .npmrc ships `_authToken=${NPM_TOKEN}` which pnpm 11
+        # refuses to env-expand, so append the literal token line here.
+        #   - minimumReleaseAge=0: skip pnpm's 24h supply-chain hold on @ch5me
+        #     packages republished <24h ago during the registry cutover.
+        #   - verify-deps-before-run=false: THE key line. pnpm 11 defaults this to
+        #     true, so `pnpm typecheck`/`build` (turbo scripts) each re-run a full
+        #     `pnpm install` that re-does the supply-chain check — which ignores the
+        #     minimumReleaseAge config in that nested context and fails. Disabling
+        #     the pre-run verify stops the second install entirely.
         run: |
           echo "//npm.ch5.me/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
           echo "minimumReleaseAge=0" >> .npmrc
+          echo "verify-deps-before-run=false" >> .npmrc
 
       - name: Install dependencies
         # minimum_release_age=0: CI installs first-party @ch5me packages that may
