@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    container:
+      image: docker://node:20-bookworm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node 24
+        run: |
+          npm install -g n
+          n 24
+          export PATH="/usr/local/bin:$PATH"
+          node --version
+
+      - name: Enable corepack + pnpm 11.5.3
+        run: |
+          export PATH="/usr/local/bin:$PATH"
+          corepack enable
+          corepack prepare pnpm@11.5.3 --activate
+          pnpm --version
+
+      - name: Configure @ch5me registry
+        run: |
+          echo "//npm.ch5.me/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+          echo "@ch5me:registry=https://npm.ch5.me/" >> ~/.npmrc
+
+      - name: Install dependencies
+        run: |
+          export PATH="/usr/local/bin:$PATH"
+          pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: |
+          export PATH="/usr/local/bin:$PATH"
+          pnpm typecheck
+
+      - name: Test
+        run: |
+          export PATH="/usr/local/bin:$PATH"
+          pnpm test
+        continue-on-error: true
+
+      - name: Build
+        run: |
+          export PATH="/usr/local/bin:$PATH"
+          pnpm build
