@@ -1,4 +1,7 @@
-name: CI
+# Dasio (Forgejo Actions) CI — story-gen quality gate.
+# act_runner on Dell: ubuntu-latest => docker://node:20-bookworm (Node 20, Python 3.11, no pip).
+# Node 24 installed via n. GitHub Actions (origin) stays live in parallel — additive only.
+name: CI (Dasio)
 
 on:
   push:
@@ -9,26 +12,19 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    container:
-      image: docker://node:20-bookworm
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install Node 24
         run: |
           npm install -g n
           n 24
-          export PATH="/usr/local/bin:$PATH"
-          node --version
+          echo "/usr/local/bin" >> $GITHUB_PATH
 
-      - name: Enable corepack + pnpm 11.5.3
+      - name: Setup pnpm
         run: |
-          export PATH="/usr/local/bin:$PATH"
           corepack enable
           corepack prepare pnpm@11.5.3 --activate
-          pnpm --version
 
       - name: Configure @ch5me registry
         run: |
@@ -36,22 +32,16 @@ jobs:
           echo "@ch5me:registry=https://npm.ch5.me/" >> ~/.npmrc
 
       - name: Install dependencies
-        run: |
-          export PATH="/usr/local/bin:$PATH"
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Typecheck
-        run: |
-          export PATH="/usr/local/bin:$PATH"
-          pnpm typecheck
+        run: pnpm typecheck
 
       - name: Test
-        run: |
-          export PATH="/usr/local/bin:$PATH"
-          pnpm test
+        run: pnpm test
         continue-on-error: true
 
       - name: Build
-        run: |
-          export PATH="/usr/local/bin:$PATH"
-          pnpm build
+        run: pnpm build
