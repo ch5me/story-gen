@@ -1,0 +1,27 @@
+path: ENC[AES256_GCM,data:pNaF9R2H85svoma4yg6b7Qr/,iv:zkK+D/F/0WgGbqH6QX/4hkhpunoSqkg7vpnT0xGnO/E=,tag:9iaDPDRARNoW78ttcuEppg==,type:str]
+readers:
+    roles:
+        - ENC[AES256_GCM,data:8WSw1Qs=,iv:xzOQi4YU/d5W5R6xwKlX7Ya9CI8lcz+tVUeE6C99/5M=,tag:dJwyyw44BHOO9caSCYXmHw==,type:str]
+        - ENC[AES256_GCM,data:wRHmAgBC,iv:r5zr4nmM6q7ktTeZ4/jVHAT6QG161loHZOMIBjHTi74=,tag:j+5pT9QZKZzQiXkUQBpKpQ==,type:str]
+        - ENC[AES256_GCM,data:N/I=,iv:9ER0ceC9ZN3ddkSNpV1PbGR0Cqfu5ziu8wRBHW7tlbM=,tag:TP1ligFJTy2PYszNklDT3w==,type:str]
+    identities: []
+sensitive: ENC[AES256_GCM,data:EwbM3g==,iv:u35AdzqcHdlcEFsWaK7Mm+ZClcJmt78GbcuUHOl+6z4=,tag:AaA19K/4GQpwdh+zyCBqqA==,type:bool]
+entries:
+    env/project/shared/NPM_TOKEN:
+        value: ENC[AES256_GCM,data:oGCTjuBFnF6vwkGebiVEBKZmkMbFmDOZm+Xyt2mFpzHAI0a5DZBpEPyODiOEtAy9cHyLxjo4n81PzqO++rynkfArJUqRT3J86aPXsrEeK7KWR3K4co5IiQor+W+q6WJtWN0q0LrB2610OPn8q1k2t23bsgLUPS8EtfIE/mYP5Jkfo3snIn9QFPE6xgnCj6pX+HpoYP2DGe3QWNjNN757VjM92t67uPjYVNj/5EdkAs4AgD3Y,iv:92lLEY9PAd9HLjWhxTj1Wi47PaegOKgGtO6WWN86kYY=,tag:xrPTNopCcjpKTWMoesRgTA==,type:str]
+        sensitive: ENC[AES256_GCM,data:LayYCg==,iv:E3J743RSlYBrfep4DMwdZQcLWuZeOv0pUoa2oR4Qe8c=,tag:peuNpSAEx28iV7hjAVbZfA==,type:bool]
+sops:
+    age:
+        - recipient: age1t74vfsxcwpgj4a0rtuy7y74cnwuhznej6p9sk0udmxza9jsgyyfsrs7xq2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRU25qSExBY2tyWmgvZzFL
+            NTZBdUlzRXEzNGdRRzBiVmdNWFVWWWtsdlhNCm5mM3dPZ0l6MEdlZEJpK0V6Sjl6
+            cXdPbUhqYWQ2bHYyREk0VnUzT3VaQk0KLS0tIG9XOTJjUkhheWdmUjBvendUeEV5
+            ZWVnWjA4ZXhOSXBTRXVPS3crZ2JPOG8KrPqE3hL8J/GbvOMYfIVKiVE3PTJO+R0Z
+            Ub8zQyMrpvkXuWYNmd1WoTbzlzJZ2JqC1SoETVVApu5nAPCQg1m6eQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-06-16T18:21:27Z"
+    mac: ENC[AES256_GCM,data:P2hPBJSZVjof83Tct1kTGrytRlsVeZWD1To45PSGIXb/wS1/BnmOXViSJSGSQqYPsqBP7a8E7buOwzDIaHUcnxqmna32mDneuZ20RICp9/1lyLFbLonsS7Att5YCkdtVLHZ9mrhX5uaFk4pC34P3amCCVlecZtAT9AljyLq84mU=,iv:MgIuD9G6gjobZ3VdzEsxbg7P1fPUhiHXo7fyr09D9Rs=,tag:MZh83oXBtTpw/NuCFgeVig==,type:str]
+    encrypted_regex: .*
+    version: 3.11.0
