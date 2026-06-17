@@ -1,6 +1,6 @@
 # Dasio (Forgejo Actions) CI — story-gen quality gate.
 # act_runner on Dell: ubuntu-latest => docker://node:20-bookworm (Node 20, Python 3.11, no pip).
-# Node 24 installed via n. GitHub Actions (origin) stays live in parallel — additive only.
+# Node 24 installed via n.
 name: CI (Dasio)
 
 on:
@@ -36,7 +36,7 @@ jobs:
         run: |
           npm install -g n
           n 24
-          echo "/usr/local/bin" >> $GITHUB_PATH
+          echo "/usr/local/bin" >> "$GITHUB_PATH"
 
       - name: Setup pnpm
         run: |
@@ -55,9 +55,11 @@ jobs:
         #     minimumReleaseAge config in that nested context and fails. Disabling
         #     the pre-run verify stops the second install entirely.
         run: |
-          echo "//npm.ch5.me/:_authToken=${NPM_TOKEN}" >> .npmrc
-          echo "minimumReleaseAge=0" >> .npmrc
-          echo "verify-deps-before-run=false" >> .npmrc
+          {
+            echo "//npm.ch5.me/:_authToken=${NPM_TOKEN}"
+            echo "minimumReleaseAge=0"
+            echo "verify-deps-before-run=false"
+          } >> .npmrc
 
       - name: Install dependencies
         # minimum_release_age=0: CI installs first-party @ch5me packages that may
