@@ -118,7 +118,7 @@ docs/
 
 ## CH5 Design System (standard look & feel)
 
-The web apps use the **published** shared CH5 design system from GitHub Packages —
+The web apps use the **published** shared CH5 design system from the CH5 Verdaccio registry —
 do NOT re-implement or duplicate UI primitives:
 
 - `@ch5me/ch5-ui-web` — the component library (Radix + Tailwind v4 + `--ff-*`
@@ -126,8 +126,8 @@ do NOT re-implement or duplicate UI primitives:
   Input, Textarea, ScrollArea, Badge, Tooltip, cn } from '@ch5me/ch5-ui-web'`.
 - `@ch5me/firefly-design` + `@ch5me/ch5-design-web` — design tokens / theme CSS.
 
-These come from the `@ch5me` GitHub Packages registry (see `.npmrc`; auth via
-`~/.npmrc` / `NODE_AUTH_TOKEN`). Our own `@ch5me/storygen-*` packages resolve from
+These come from the `@ch5me` registry at `https://npm.ch5.me/` (see `.npmrc`;
+auth via user npm config; CI appends `NPM_TOKEN` at runtime). Our own `@ch5me/storygen-*` packages resolve from
 the workspace and never hit the registry. We consume the **published** design
 packages rather than workspace path refs to `../ch5-packages` (per the
 "prefer published shared packages over ad-hoc local links" policy, and because

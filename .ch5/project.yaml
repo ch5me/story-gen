@@ -1,0 +1,45 @@
+id: story-gen
+version: 1
+project:
+  id: story-gen
+  name: StoryGen
+  kind: monorepo
+  lifecycle: active
+  summary: AI illustrated-fiction production system with canonical story data, authoring tools, runtime reader, compiler, and adapter boundaries.
+  owners:
+    - id: chris
+      role: owner
+  tags:
+    - story-production
+    - illustrated-fiction
+    - monorepo
+    - react
+    - cloudflare
+    - pnpm
+  key_concepts:
+    - canonical story database
+    - adapter-based engines and exporters
+    - deterministic compiler outputs
+    - playable reader and authoring studio
+  roots:
+    - locator: .
+      role: primary
+  repos:
+    - id: primary
+      locator: .
+      role: primary
+      vcs:
+        provider: forgejo
+        repo: ch5/story-gen
+        remote: hq
+  docs:
+    - locator: README.md
+      role: overview
+    - locator: AGENTS.md
+      role: agent-guide
+    - locator: docs/plan/storygen-bootstrap-checklist.md
+      role: implementation-plan
+  aliases:
+    - story-gen
+    - storygen
+    - story-production

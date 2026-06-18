@@ -1,0 +1,8 @@
+id = "story-gen"
+name = "StoryGen"
+kind = "monorepo"
+tier = "local"
+runtime = "mixed"
+key = "STORY"
+cmux_color = "#D97706"
+manifest = ".ch5/project.yaml"

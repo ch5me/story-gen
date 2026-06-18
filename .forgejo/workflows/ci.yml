@@ -45,8 +45,8 @@ jobs:
 
       - name: Configure @ch5me registry
         # Write into the PROJECT .npmrc (pnpm reads project config last; it shadows
-        # ~/.npmrc). The repo .npmrc ships `_authToken=${NPM_TOKEN}` which pnpm 11
-        # refuses to env-expand, so append the literal token line here.
+        # ~/.npmrc). pnpm 11 refuses env-expanded auth in repo-controlled .npmrc,
+        # so append the literal token line here at runtime.
         #   - minimumReleaseAge=0: skip pnpm's 24h supply-chain hold on @ch5me
         #     packages republished <24h ago during the registry cutover.
         #   - verify-deps-before-run=false: THE key line. pnpm 11 defaults this to

@@ -42,8 +42,8 @@ whole system. They're short and current.
   whole thing green with `bash scripts/smoke-acceptance.sh`.
   - **External collaborators:** `pnpm install` fetches the shared CH5 design
     packages (`@ch5me/ch5-ui-web`, `@ch5me/firefly-design`, `@ch5me/ch5-design-web`)
-    from **GitHub Packages**, which are private — you need read access / a
-    `NODE_AUTH_TOKEN` for the `@ch5me` scope (ask the StoryGen owner). **Reading
+    from the private CH5 Verdaccio registry at `https://npm.ch5.me/` — you need
+    a valid user npm config token for the `@ch5me` scope (ask the StoryGen owner). **Reading
     and understanding the code + docs needs none of this** — only running the apps
     locally does. The non-UI packages (`schema`, `compiler`, `continuity`,
     `prompt-compiler`, `generation`, `player`) and the api have no such dependency.

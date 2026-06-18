@@ -39,7 +39,7 @@ exports it, continuity checks catch drift.
   ~/Documents/StoryGen).
 - App shape: `apps/studio` + `apps/api` + `apps/reader`. Package scope
   `@ch5me/storygen-*`.
-- Stack: pnpm@10.11.0 + turbo + devmux + hush; Vite + React 19; Hono + Cloudflare
+- Stack: pnpm@11.5.3 + turbo + devmux + hush; Vite + React 19; Hono + Cloudflare
   Workers + D1/R2; Drizzle; Zod; Vitest; React Flow.
 - Embed only `inkjs` + `tracery-grammar` in v1. No GPL/source-available code
   copied in — references are ideas/schema/UX only unless a documented
@@ -76,8 +76,8 @@ three apps; studio renders the seeded project; reader advances + chooses a route
 Preview plays the compiled story; Ren'Py deterministic; Ink validates via inkjs;
 prompt compiler deterministic (seeded Tracery); continuity catches drift.
 
-**Landed:** pushed to `git@github.com:ch5me/story-gen` (private), `main` tracks
-`origin/main`. Goal achieved end-to-end.
+**Landed:** pushed to `https://git.ch5.me/ch5/story-gen.git` (private), `main`
+tracks `hq/main`. Goal achieved end-to-end.
 
 ## Plan
 
